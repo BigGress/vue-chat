@@ -5,6 +5,13 @@
       <!-- 用户 -->
       <Users />
       <div class="message-room">
+        <header class="chatter-header">
+          <button v-on:click="toggleMenu" class="menu-btn"
+                  v-bind:class="{close: showUser}">
+            <img v-bind:src="showUser ? '/images/close.png' : '/images/menu.png'" alt="">
+          </button>
+          <h5>{{chatter}}</h5>
+        </header>
         <div class="messages">
           <Messages v-bind:messages="room ? room.messages : []" />
         </div>
@@ -41,11 +48,19 @@ export default {
       users: "users",
       room: "activeRoom",
       rooms: "rooms"
-    })
+    }),
+    ...mapState(["showUser"]),
+    chatter() {
+      if (this.room) {
+        let chatter = this.users.find(e => e.id === this.room.users[0]);
+        return chatter.name;
+      } else {
+        return null;
+      }
+    }
   },
   data() {
     return {
-      showUser: true,
       abc: false
     };
   },
@@ -71,6 +86,9 @@ export default {
         this.$store.dispatch("getMessage", msgObj);
       }
     },
+    toggleMenu() {
+      this.$store.dispatch("toggleMenu");
+    }
   }
 };
 </script>
@@ -104,6 +122,40 @@ li {
   display: flex;
   height: 100vh;
 
+  .chatter-header {
+    display: flex;
+
+    padding: 8px 0;
+    box-shadow: 0 1px 1px lighten(#000, 90);
+
+    .menu-btn {
+
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: transparent;
+
+      &.close {
+        img {
+          width: 1.1rem;
+        }
+      }
+
+      img {
+        width: 1.5rem;
+      }
+    }
+
+    h5 {
+      font-weight: normal;
+      font-size: 1.4rem;
+      margin: 0;
+
+      flex: 1;
+
+      text-align: center;
+    }
+  }
 }
 
 .message-room {

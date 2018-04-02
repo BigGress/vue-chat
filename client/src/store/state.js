@@ -1,4 +1,5 @@
 module.exports = {
+    showUser: true,
     // self: {},
     users: [],
     // 房间所以用户与room的id映射

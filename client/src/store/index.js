@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     getters: {
         self: (state) => {
             let self = state.users.find(e => e.isSelf);
-            console.log(`自己: `, self);
+
             return self;
         },
         users: (state) => state.users,
@@ -37,6 +37,7 @@ req.getMessage((data) => {
 
 req.getUser((data) => {
     let selfName = localStorage.getItem('name');
+
     data.forEach(e => {
         if (e.name === selfName) {
             e.isSelf = true;

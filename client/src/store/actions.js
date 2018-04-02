@@ -2,6 +2,9 @@ import req from '../service/fetch';
 import { addSelf } from '../../../actions';
 
 const actions = {
+    toggleMenu(context) {
+        return context.commit('toggleUserBox');
+    },
     setUser(context, users) {
         // console.log(users);
         return context.commit('addUser', users);

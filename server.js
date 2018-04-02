@@ -36,11 +36,19 @@ io.on("connection", function(socket) {
                 user.socket.emit(getUser, users.map(e => {
                     return Object.assign({}, e, { socket: undefined })
                 }))
+                // sendUser(uesr.socket);
             })
         } else {
             socket.emit(userExist, ERROR_MSGS.find(e => e.type === 4001));
         }
     });
+
+    socket.on(getUser, () => {
+        // sendUser(socket);
+        socket.emit(getUser, users.map(e => {
+            return Object.assign({}, e, { socket: undefined })
+        }))
+    })
 
     socket.on(sendMessage, (data) => {
         let user = users.find(e => e.id === data.getter);

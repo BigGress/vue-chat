@@ -4,39 +4,38 @@
         <header class="tab-box">
             <button class="tab-btn">用户</button>
             <button class="close" v-on:click="toggleUser">
-            <img src="/images/close.png" alt="close"/>
+              <img src="/images/close.png" alt="close"/>
             </button>
         </header>
         <List class="user-list" v-on:item="chatUser($event)" v-bind:list="users"/>
-        <button class="open" v-on:click="toggleUser"
+        <!-- <button class="open" v-on:click="toggleUser"
                 v-bind:class="{show: !showUser}">
         <img src="/images/user.png" alt="user"/>
-        </button>
+        </button> -->
     </div>
 </template>
 
 <script>
 import List from "./List";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
     ...mapGetters({
       user: "self",
-      users: "users"
+      users: "users",
+    }),
+    ...mapState({
+      showUser: 'showUser'
     })
   },
   components: {
     List
   },
-  data() {
-    return {
-      showUser: true
-    };
-  },
   methods: {
     toggleUser() {
-      this.showUser = !this.showUser;
+      // this.showUser = !this.showUser;
+      this.$store.dispatch('toggleMenu');
     },
     chatUser(user) {
       if (this.user.id != user.id) {
@@ -64,6 +63,20 @@ $fontColor: #222;
   &.show {
     width: 24%;
   }
+
+  @media screen and (max-width: 1080px) {
+      height: 100vh;
+      background: #fff;
+      position: absolute;
+      left: -24%;
+      z-index: 100;
+
+      &.show {
+        left: 0;
+        width: 60%;
+      }
+  }
+
 }
 
 .open {
@@ -107,11 +120,16 @@ $fontColor: #222;
   }
 
   .close {
+    display: none;
     background: transparent;
     border: none;
     cursor: pointer;
     outline: none;
     margin-right: 4px;
+
+    @media screen and (max-width: 1080px) {
+      display: block;
+    }
   }
 }
 .tab-btn {

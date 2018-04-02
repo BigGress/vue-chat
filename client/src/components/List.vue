@@ -16,7 +16,7 @@ li {
   padding: 6px 0px 6px 8px;
   transition: all 0.2s ease;
 
-  width: 100%;
+  width: calc(100% - 8px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

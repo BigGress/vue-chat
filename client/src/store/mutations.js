@@ -3,6 +3,9 @@ import store from "./index";
 // import req from '../service/fetch';
 
 const mutations = {
+    toggleUserBox(state) {
+        state.showUser = !state.showUser;
+    },
     // 添加用户
     addUser(state, users) {
         users.forEach(user => {
@@ -69,6 +72,8 @@ const mutations = {
                 !store.getters.activeRoom,
             );
         }
+
+        
 
         room.messages.push(msgId);
 
